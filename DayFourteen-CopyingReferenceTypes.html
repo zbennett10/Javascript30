@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // start with strings, numbers and booleans VALUE TYPES******
+    var age = 100;
+    var age2 = age;
+    age = 200;
+
+    console.log(age, age2);
+
+    var name = 'Wes', name2 = name;
+    name = 'wesley';
+
+
+
+    // Let's say we have an array ARRAYS AND OBJECTS ARE REFERENCE TYPES*********
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // and we want to make a copy of it.
+    const team = players;
+
+
+    // You might think we can just do something like this: 
+    team[3] = 'Lux'; //changes player array as well
+
+    // however what happens when we update that array?
+
+
+    // now here is the problem!
+
+    // oh no - we have edited the original array too!
+
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+    // So, how do we fix this? We take a copy instead!
+
+    //ways to create deep copies
+    const team2 = players.slice();
+    const team3 = [].concat(players);
+    const team4 = [...players]; //takes every item out of iterable and puts it into new array
+    const team5 = Array.from(players);
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: "Zach Bennett",
+      age: 80
+    }
+
+    // and think we make a copy:
+    const captain = person;
+    captain.number = 99; //changes both
+
+    // how do we take a copy instead?
+    const cap2 = Object.assign({}, person, { number: 99});
+    //creates a 1 level deep copy of object and allows you to make changes inline
+
+    //shows that this only works one level deep. its a shallow copy beyond first object level
+    const wes = {
+      name: 'Wes',
+      age: 100,
+      social: {
+        twitter: '@webos',
+        facebook: 'wesbos.developer'
+      }
+    }
+
+      const dev = Object.assign({}, wes); //only works one level deep
+    
+    //changes to the social object make changes to the original object
+     //if you want to clone deep you need to find a clone deep function
+     //this is very rare
+
+     //poor man's deep clone
+     const dev2 = JSON.parse(JSON.stringify(wes));
+     //turns object to string and then immediately parses it back into an object
+
+  </script>
+
+</body>
+</html>
